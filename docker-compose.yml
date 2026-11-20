@@ -1,0 +1,11 @@
+services:
+  portfolio:
+    build: .
+    image: portfolio:latest
+    container_name: portfolio
+    # Only reachable from the Pi itself; Cloudflare Tunnel forwards erik-taylor.dev here.
+    # Change 8088 if another service on the Pi already uses it.
+    ports:
+      - "127.0.0.1:8088:80"
+    # Restarts after a crash and after the Pi reboots, unless you stop it yourself.
+    restart: unless-stopped
