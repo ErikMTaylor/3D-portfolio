@@ -45,7 +45,7 @@ export const hero = {
 export const about = {
     kicker: '01 · about',
     title: 'Player Profile',
-    text: "A short paragraph about you: what you love building, the kind of problems you're best at, and what you're looking for next. Two or three sentences is plenty. Recruiters skim, so lead with your strongest point.",
+    text: 'For me, technology was never just a tool. It was a whole new world. Somewhere to breathe, build, and be someone else for a while. Now I spend my time making sure that escape stays safe for everyone.',
     // `icon` is a little ASCII glyph shown next to each slot
     loadout: [
         {icon: '</>', label: 'class', value: 'Tech Nerd'},
@@ -62,7 +62,9 @@ export const projects = {
 
     // The big card on the left.
     featured: {
-        mediaLabel: 'simple - unique - efficient',
+        // Screenshot in /public (16:9, 1600x900). Leave out to show the ASCII texture instead.
+        image: '/projects/ink-social.webp',
+        imageAlt: 'Ink Social Co. storefront showing the product grid',
         title: 'Ink Social Co.',
         stack: ['C#/.NET', 'React', 'Stripe'],
         // one line each

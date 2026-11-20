@@ -26,8 +26,12 @@ export default function Projects() {
 
       <Reveal as="article" className="panel feature" onMouseEnter={onCardHover}>
         <div className="media">
-          <AsciiTexture />
-          <span className="label">{featured.mediaLabel}</span>
+          {featured.image ? (
+            <img src={featured.image} alt={featured.imageAlt ?? ''} loading="lazy" decoding="async" />
+          ) : (
+            <AsciiTexture />
+          )}
+          {featured.mediaLabel && <span className="label">{featured.mediaLabel}</span>}
         </div>
         <div className="info">
           <h3>{featured.title}</h3>
