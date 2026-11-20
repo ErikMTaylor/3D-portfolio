@@ -1,0 +1,248 @@
+/* ============================================================
+   Theme tokens, reset and the small building blocks shared by
+   every section (panel, kicker, chips, buttons, glitch, reveal).
+   ============================================================ */
+
+:root {
+  --bg: #fbf6ff;
+  --panel: rgba(251, 246, 255, 0.88);
+  --ink: #241b35;
+  --dim: #665a7c;
+  --line: rgba(36, 27, 53, 0.14);
+  --pink: #ff8cc6;
+  --blue: #7cc8ff;
+  --lav: #b79bff;
+  --mint: #8fe8c6;
+  --accent: #c4317c;
+  --accent2: #2b78bd;
+  --shadow: 0 20px 60px -24px rgba(120, 70, 160, 0.35);
+}
+
+/* night mode: <body class="dark"> */
+body.dark {
+  --bg: #0c0a14;
+  --panel: rgba(14, 11, 24, 0.86);
+  --ink: #f6efff;
+  --dim: #a99cc0;
+  --line: rgba(246, 239, 255, 0.14);
+  --accent: #ff9ed0;
+  --accent2: #8fd3ff;
+  --shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition: background 0.6s, color 0.6s;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* The WebGL canvas sits behind everything */
+.world {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+.world canvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+
+main {
+  position: relative;
+  z-index: 5;
+}
+
+section {
+  position: relative;
+  padding: 0 clamp(16px, 5vw, 80px);
+}
+
+/* ---------- typography ---------- */
+
+h2 {
+  font: 800 clamp(30px, 3.6vw, 50px) / 1.02 'Unbounded', sans-serif;
+  letter-spacing: -0.02em;
+  margin: 14px 0 18px;
+}
+
+p {
+  line-height: 1.65;
+  font-size: 16.5px;
+}
+
+.dim {
+  color: var(--dim);
+}
+
+.kicker {
+  font: 500 12px 'IBM Plex Mono', monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.kicker::before {
+  content: '';
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+}
+
+/* ---------- blocks ---------- */
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: background 0.6s, border-color 0.6s;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.chip {
+  font: 500 12px 'IBM Plex Mono', monospace;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--lav) 14%, transparent);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: 600 13px 'IBM Plex Mono', monospace;
+  letter-spacing: 0.03em;
+  padding: 13px 18px;
+  border-radius: 12px;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--bg);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--pink);
+}
+.btn.ghost {
+  background: var(--panel);
+  color: var(--ink);
+  border-color: var(--line);
+}
+.btn.ghost:hover {
+  box-shadow: 4px 4px 0 var(--blue);
+}
+
+/* blinking block cursor */
+.cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1em;
+  vertical-align: -2px;
+  background: var(--accent);
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ---------- glitch text (<Glitch>) ---------- */
+
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+.glitch.on::before {
+  opacity: 0.85;
+  color: var(--pink);
+  animation: glitchA 1s steps(3) both;
+}
+.glitch.on::after {
+  opacity: 0.85;
+  color: var(--blue);
+  animation: glitchB 1s steps(3) both;
+}
+@keyframes glitchA {
+  0% { clip-path: inset(10% 0 70% 0); transform: translate(-6px, 0); }
+  33% { clip-path: inset(55% 0 20% 0); transform: translate(5px, 0); }
+  66% { clip-path: inset(30% 0 45% 0); transform: translate(-3px, 0); }
+  100% { clip-path: inset(80% 0 5% 0); transform: translate(0); }
+}
+@keyframes glitchB {
+  0% { clip-path: inset(65% 0 10% 0); transform: translate(6px, 0); }
+  33% { clip-path: inset(5% 0 75% 0); transform: translate(-5px, 0); }
+  66% { clip-path: inset(40% 0 35% 0); transform: translate(4px, 0); }
+  100% { clip-path: inset(0 0 90% 0); transform: translate(0); }
+}
+
+/* ---------- scroll reveal (<Reveal>) ---------- */
+
+.rv {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.rv.in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .rv {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}

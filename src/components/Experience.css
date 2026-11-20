@@ -1,0 +1,85 @@
+.work .intro {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+}
+.work .intro .panel {
+  padding: 24px 28px;
+  max-width: 600px;
+}
+
+/* each checkpoint alternates sides on desktop */
+.cp {
+  min-height: 95vh;
+  display: flex;
+  align-items: center;
+}
+.cp--right {
+  justify-content: flex-end;
+}
+.cp .panel {
+  max-width: 560px;
+  width: 100%;
+  padding: 26px 28px;
+}
+
+.cp .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font: 500 11.5px 'IBM Plex Mono', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.cp .flag {
+  color: var(--bg);
+  background: var(--ink);
+  padding: 5px 9px;
+  border-radius: 7px;
+}
+
+.cp h3 {
+  font: 600 clamp(22px, 2.2vw, 30px) / 1.1 'Unbounded', sans-serif;
+  margin: 16px 0 4px;
+}
+.cp .co {
+  font: 500 14px 'IBM Plex Mono', monospace;
+  color: var(--accent);
+}
+
+.cp ul {
+  margin: 16px 0 0 0;
+  list-style: none;
+  display: grid;
+  gap: 9px;
+}
+.cp li {
+  padding-left: 22px;
+  position: relative;
+  line-height: 1.55;
+}
+.cp li::before {
+  content: '>';
+  position: absolute;
+  left: 0;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--accent2);
+  font-weight: 600;
+}
+.cp .chips {
+  margin-top: 16px;
+}
+
+.next-text {
+  margin-top: 10px;
+}
+.next-cta {
+  margin-top: 18px;
+}
+
+@media (max-width: 900px) {
+  .cp--right {
+    justify-content: flex-start;
+  }
+}

@@ -1,0 +1,79 @@
+.top {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px clamp(16px, 3.5vw, 44px);
+}
+
+.brand {
+  font: 600 14px 'IBM Plex Mono', monospace;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  background: var(--panel);
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.brand .cursor {
+  margin-left: 2px;
+}
+
+nav.links {
+  display: flex;
+  gap: 4px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 4px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+nav.links a,
+nav.links button {
+  font: 500 12px 'IBM Plex Mono', monospace;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: background 0.25s;
+}
+nav.links a:hover,
+nav.links button:hover {
+  background: color-mix(in srgb, var(--lav) 28%, transparent);
+}
+nav.links a.on {
+  background: color-mix(in srgb, var(--pink) 35%, transparent);
+}
+
+#lights {
+  border-left: 1px solid var(--line) !important;
+  border-radius: 0 8px 8px 0 !important;
+}
+
+@media (max-width: 900px) {
+  nav.links a.hide-sm {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .brand {
+    display: none;
+  }
+  .top {
+    justify-content: center;
+  }
+  nav.links a,
+  nav.links button {
+    padding: 8px 9px;
+    font-size: 11.5px;
+  }
+}
