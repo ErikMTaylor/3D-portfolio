@@ -1,33 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
 
-const STORAGE_KEY = 'pf-dark';
-
-const readSaved = () => {
-  try {
-    return localStorage.getItem(STORAGE_KEY) === '1';
-  } catch {
-    return false;
-  }
-};
-
-/** Day / night toggle. Adds `dark` to <body> (see styles/base.css) and remembers the choice. */
+/**
+ * Day / night toggle. Adds `dark` to <body> (see styles/base.css).
+ * Every visit starts in dark mode; it only changes when the visitor clicks the toggle.
+ */
 export function useDarkMode() {
-  const [dark, setDark] = useState(readSaved);
+  const [dark, setDark] = useState(true);
 
   useEffect(() => {
     document.body.classList.toggle('dark', dark);
   }, [dark]);
 
-  const toggle = useCallback(() => {
-    setDark((d) => {
-      try {
-        localStorage.setItem(STORAGE_KEY, d ? '0' : '1');
-      } catch {
-        /* storage unavailable: just don't remember */
-      }
-      return !d;
-    });
-  }, []);
+  const toggle = useCallback(() => setDark((d) => !d), []);
 
   return [dark, toggle];
 }
