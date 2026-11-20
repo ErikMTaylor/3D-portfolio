@@ -18,7 +18,11 @@ export default function Hero() {
             <span key={role}>{role}</span>
           ))}
         </div>
-        <p className="lede dim">{hero.lede}</p>
+        <div className="lede dim">
+          {hero.lede.map((line) => (
+            <p key={line}>{line}</p>
+          ))}
+        </div>
         <div className="actions">
           <a className="btn" href={hero.primaryCta.href}>
             {hero.primaryCta.label}

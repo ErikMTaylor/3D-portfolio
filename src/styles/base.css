@@ -236,6 +236,15 @@ p {
   transform: none;
 }
 
+/* Phones: blurring the animated 3D canvas behind big cards is expensive and makes them flicker.
+   The panels are already ~88% opaque, so drop the blur. */
+@media (max-width: 900px) {
+  .panel {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

@@ -32,6 +32,10 @@ h1 {
 
 .lede {
   max-width: 560px;
+  display: grid;
+  gap: 8px;
+}
+.lede p {
   font-size: clamp(16px, 1.35vw, 19px);
 }
 

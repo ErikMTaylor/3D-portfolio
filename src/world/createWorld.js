@@ -27,6 +27,22 @@ export function createWorld({ container, checkpointCount, initialDark, getLayout
   const mobile = innerWidth < 760;
   const dpr = Math.min(devicePixelRatio || 1, 2);
 
+  // Viewport size used for the 3D scene. On phones the browser's address bar slides in and
+  // out while scrolling, which changes innerHeight by ~50–100px and fires `resize`. Reacting
+  // to that re-creates the canvas and shifts every object, which looks like glitching. So on
+  // touch devices we only ever grow the height (until the width changes, e.g. rotation).
+  const coarsePointer = matchMedia('(pointer: coarse)').matches;
+  let vw = innerWidth;
+  let vh = innerHeight;
+  function measureViewport() {
+    if (coarsePointer && innerWidth === vw) {
+      vh = Math.max(vh, innerHeight);
+    } else {
+      vw = innerWidth;
+      vh = innerHeight;
+    }
+  }
+
   // ---------------- renderer ----------------
   const canvas = document.createElement('canvas');
   container.appendChild(canvas);
@@ -40,14 +56,14 @@ export function createWorld({ container, checkpointCount, initialDark, getLayout
     return NOOP_WORLD;
   }
   renderer.setPixelRatio(dpr);
-  renderer.setSize(innerWidth, innerHeight);
+  renderer.setSize(vw, vh);
 
   // ---------------- scene ----------------
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x000000);
   scene.fog = new THREE.Fog(0x000000, 16, 105);
 
-  const camera = new THREE.PerspectiveCamera(62, innerWidth / innerHeight, 0.1, 200);
+  const camera = new THREE.PerspectiveCamera(62, vw / vh, 0.1, 200);
 
   scene.add(new THREE.AmbientLight(0xffffff, 0.55));
   const sun = new THREE.DirectionalLight(0xffffff, 2.2);
@@ -68,15 +84,15 @@ export function createWorld({ container, checkpointCount, initialDark, getLayout
   const progressOf = (el) => {
     if (!el) return 0;
     const r = el.getBoundingClientRect();
-    const center = r.top + scrollY + r.height / 2 - innerHeight / 2;
+    const center = r.top + scrollY + r.height / 2 - vh / 2;
     return Math.min(Math.max(center / maxScroll, 0), 1);
   };
 
   function layout() {
     const targets = getLayoutTargets();
-    maxScroll = Math.max(document.documentElement.scrollHeight - innerHeight, 1);
+    maxScroll = Math.max(document.documentElement.scrollHeight - vh, 1);
 
-    placeOnRoad(pieces.knot, 0, 20, 0, 6.5);
+    placeOnRoad(pieces.knot, 0, 20, 0, 8.5);
     placeOnRoad(pieces.d20, progressOf(targets.about), 13, mobile ? 0 : -5.5, 5);
     placeOnRoad(pieces.crates, progressOf(targets.projects), 16, 0, 0);
     targets.checkpoints.forEach((el, i) => pieces.gates[i] && placeOnRoad(pieces.gates[i], progressOf(el), 9));
@@ -84,11 +100,11 @@ export function createWorld({ container, checkpointCount, initialDark, getLayout
   }
 
   function resize() {
-    renderer.setSize(innerWidth, innerHeight);
-    camera.aspect = innerWidth / innerHeight;
-    camera.fov = innerWidth < innerHeight ? 75 : 62;
+    renderer.setSize(vw, vh);
+    camera.aspect = vw / vh;
+    camera.fov = vw < vh ? 75 : 62;
     camera.updateProjectionMatrix();
-    ascii.setSize(innerWidth, innerHeight);
+    ascii.setSize(vw, vh);
     layout();
   }
 
@@ -114,6 +130,10 @@ export function createWorld({ container, checkpointCount, initialDark, getLayout
     progress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
   };
   const onResize = () => {
+    const prevW = vw;
+    const prevH = vh;
+    measureViewport();
+    if (vw === prevW && vh === prevH) return; // e.g. address bar toggling on a phone
     resize();
     onScroll();
   };
