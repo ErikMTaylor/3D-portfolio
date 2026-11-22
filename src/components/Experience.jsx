@@ -4,7 +4,6 @@ import Glitch from './ui/Glitch';
 import Reveal from './ui/Reveal';
 import './Experience.css';
 
-const pad = (n) => String(n).padStart(2, '0');
 
 /**
  * One full-height "checkpoint" per role. The `data-cp` attribute is how the 3D world
@@ -15,7 +14,7 @@ function Checkpoint({ number, side, children }) {
     <div className={`cp cp--${side}`} data-cp>
       <Reveal className="panel">
         <div className="row">
-          <span className="flag">checkpoint {pad(number)}</span>
+          <span className="flag">checkpoint {number}</span>
         </div>
         {children}
       </Reveal>

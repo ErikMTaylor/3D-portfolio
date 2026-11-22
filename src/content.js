@@ -43,7 +43,7 @@ export const hero = {
 };
 
 export const about = {
-    kicker: '01 · about',
+    kicker: '1 · about',
     title: 'Player Profile',
     text: 'For me, technology was never just a tool. It was a whole new world. Somewhere to breathe, build, and be someone else for a while. Now I spend my time making sure that escape stays safe for everyone.',
     // `icon` is a little ASCII glyph shown next to each slot
@@ -57,7 +57,7 @@ export const about = {
 };
 
 export const projects = {
-    kicker: '02 · projects',
+    kicker: '2 · projects',
     title: 'Builds',
 
     // The big card on the left.
@@ -96,7 +96,7 @@ export const projects = {
 };
 
 export const experience = {
-    kicker: '03 · experience',
+    kicker: '3 · experience',
     title: 'The road so far',
 
     // One checkpoint gate is drawn on the road for each of these (plus the final one below).
