@@ -94,10 +94,14 @@
   top: -58px;
   font: 500 14px / 1.1 'IBM Plex Mono', monospace;
   white-space: pre;
-  cursor: pointer;
+  cursor: grab;
   user-select: none;
   color: var(--ink);
 }
+.cat:active {
+  cursor: grabbing;
+}
+
 .cat .bub {
   position: absolute;
   right: 86px;

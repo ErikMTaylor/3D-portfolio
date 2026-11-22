@@ -14,6 +14,7 @@ import About from './components/About';
 import Projects from './components/Projects';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
+import ClickSpark from './components/ui/ClickSpark';
 
 // one gate per role, plus the finish line
 const CHECKPOINT_COUNT = experience.roles.length + 1;
@@ -54,6 +55,7 @@ export default function App() {
 
   return (
     <SiteProvider kick={kick}>
+      <ClickSpark />
       <Boot done={status !== 'loading'} />
       <div className="world" ref={worldMount} aria-hidden="true" style={status === 'failed' ? { display: 'none' } : undefined} />
 

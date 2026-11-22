@@ -185,7 +185,10 @@ export function createWorld({ container, checkpointCount, initialDark, getLayout
     // speedometer from scroll velocity
     const v = (Math.abs(smoothProgress - prevProgress) * L) / Math.max(dt, 1e-3);
     prevProgress = smoothProgress;
-    speed += (v * 9 - speed) * (1 - Math.exp(-dt * 6));
+    // ease slowly both ways so the needle winds up and coasts down like a real gauge
+    const target = v * 9;
+    const rate = target > speed ? 0.45 : 0.7;
+    speed += (target - speed) * (1 - Math.exp(-dt * rate));
     onFrame?.({ speed, progress: smoothProgress });
 
     pieces.update(time, dt);
